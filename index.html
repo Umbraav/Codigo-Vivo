@@ -43,20 +43,20 @@
   </style>
 </head>
 <body>
-  <textarea id="input" placeholder="Escribe: amor,delirio,kenya o simplemente fuego..."></textarea>
+  <textarea id="input" placeholder="Escribe: perfil,follow,publico,conexion,web,borrar,social o digital..."></textarea>
 
   <script>
     const hydra = new Hydra({ detectAudio: false });
 
     const palabras = {
-      follow: () => osc(10, 0.01, 1).rotate(0.01).modulate(noise(2, 0.1), 0.5),
-      publico: () => solid(1, 1, 1).diff(voronoi(5, 0.1, 0.5).thresh(0.5, 0.1)).scale(0.8),
-      paco: () => osc(2, 0.5, 2).colorama(0.1),
-      kenya: () => noise(2, 0.5, 2).colorama(-0.9),
-      fuego: () => noise(6, 0.5, 2).colorama(0.2).modulateScale(o0, 0.8),
-      delirio: () => osc(10, 0.5, 2).colorama(-0.9).modulate(o0, 0.5),
-      amor: () => voronoi(2, 0.5, 2).colorama(-0.9).modulate(osc(3, 0.5, 1), 0.5),
-      remix: () => noise(3, 0.4).modulate(osc(2, 0.5, 2), 0.9).diff(noise(2, 0.5, 2)),
+      follow: () => osc(4,0.1,2).luma(0).mult(voronoi([10,5,15],0.2, 0.5).thresh(0.5, 0.1)).scale([2,3].fast(1.2)).rotate(15,2).modulate(src(o0)).modulateScale(osc([1,4,8],-0.5,0).scale(2),15,0).modulatePixelate(noise(5).pixelate([8,2,5],[2,8,5]),1024,8).out(o0),
+      publico: () => solid(1, 1, 1).diff(voronoi(5, 0.1, 0.5).thresh(0.5, 0.1)).scale(0.8).out(o0),
+      perfil: () => shape([3,4], 0.5).rotate(() => time*0.1).colorama([0.15,0.22]).modulateScale(osc(2, -0.5, 0).pixelate([1,10,30],[10,1]),[5,1,0.5],[0.5,1,3]).diff(src(o0).scrollX(0.01)).out(o0),
+      conexion: () => noise(()=>Math.sin(time/5)*50, () =>Math.sin(time/2)/500).kaleid([1,10,50]).luma([0.1,0.25,0.75,1].fast(0.25),0.1).color([1,0,0,1,0],[0,1,0,1,0],[0,0,1,1,0]).colorama([0.005,0.33,0.66,1.0].fast(0.125)).brightness( () =>Math.sin(time)*.5).out(o0),
+      web: () => s0.initVideo("https://media.tenor.com/gFMbAVQvwf8AAAPo/spider-spiders.mp4")src(s0).pixelate([200,90],[200,90]).scale([1,1.8].fast(0.5),[-1.26,1.26].fast(0.75),[-1.26,1.26].fast(.55)).color(0,[.1,3],2).brightness(.1).out(o0),
+      borrar: () => osc(4,0.1,2).luma().diff(voronoi([2,5,15], 0.2, 0.5).thresh(0.5, 0.1)).scale([.7,3].fast(1.2)).modulate(osc(0.6,0.5)).modulateScale(osc([1,4],-0.5,0).kaleid([5,10,20]).rotate( 15,[1,-1]).scale(0.5),15,0).modulatePixelate(noise(3).pixelate(8,8),1024,8).out(o0),
+      social: () => gradient().g([0, 0.5, 1].fast(0.5)).modulate(osc(1, 2, 0.5).pixelate(10,10), 0.02).mult(src(o0).rotate(Math.PI).scale(0.9)).diff(noise([5,1],0.1).thresh( ()=>Math.sin(time),[0.04,0.25,0.75,1])).modulateHue(osc(5,0.5,2).scale(),5).colorama(0.002).out(o0),
+      digital: () => noise(8, 0.5).pixelate(20, 20).luma(0.2, 0.1).color(0, 1, 0).modulate(osc(5, 0, 0.2), 0.01).scale(() => Math.sin(time) * 0.05 + 1).modulateScrollX(osc([1,5]).pixelate([100,40,20,70].fast(0.25)),0.5,0).scrollY(1,.3).out(o0),
     };
 
     const input = document.getElementById("input");
